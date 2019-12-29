@@ -11,16 +11,14 @@ namespace Sailfin
     public static readonly OrbitalConfig DefaultConfig = new OrbitalConfig
     {
       Name = "Sol",
-      Mass = Convert.ToUInt64(1.99e30),
+      Mass = 1.99e30f,
       Type = OrbitalType.Star,
       OrbitalDistance = 0,
       InitialAngle = 0
     };
 
-    public Star() : base(DefaultConfig)
-    {
-
-    }
+    public Star() : base(DefaultConfig) {}
+    public Star(OrbitalConfig config) : base(config) {}
 
     protected override void UpdatePosition(ulong galacticTime)
     {

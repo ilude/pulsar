@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sailfin
-{ 
+{
   public class Galaxy
   {
     public ISystemGenerator Generator { get; private set; }
@@ -14,11 +11,21 @@ namespace Sailfin
     public ulong GalacticTime { get; private set; }
     public DateTime Date { get; internal set; }
 
+    Dictionary<TimeBy, Action> InvokePulse = new Dictionary<TimeBy, Action>(Enum.GetValues(typeof(TimeBy)).Length);
+
+
     public Galaxy()
     {
       GalacticTime = 0;
       Date = new DateTime(2025, 1, 1);
       Systems = new List<Star>();
+      
+    
+      InvokePulse[TimeBy.Hour]  = () => Pulse(dateTime => dateTime.AddHours(1));
+      InvokePulse[TimeBy.Day]   = () => Pulse(dateTime => dateTime.AddDays(1));
+      InvokePulse[TimeBy.Week]  = () => Pulse(dateTime => dateTime.AddDays(5));
+      InvokePulse[TimeBy.Month] = () => Pulse(dateTime => dateTime.AddMonths(1));
+      InvokePulse[TimeBy.Year]  = () => Pulse(dateTime => dateTime.AddYears(1));
     }
 
     #region Generation
@@ -41,8 +48,30 @@ namespace Sailfin
 
       foreach (var star in Systems) star.Update(GalacticTime);
     }
-
+    
     #endregion
 
+    internal void Advance(TimeBy amount)
+    {
+      InvokePulse[amount]();
+    }
+
+    private void Pulse(Func<DateTime, DateTime> pulse)
+    {
+      var startDate = Date;
+      var pulseDate = pulse(Date);
+
+      var circuitBreaker = 0;
+      while (pulseDate.Day > 29 || circuitBreaker < 2)
+      {
+        pulseDate = pulseDate.AddDays(1);
+        circuitBreaker++;
+      }
+
+      this.Date = pulseDate;
+      this.GalacticTime += Convert.ToUInt64((this.Date - startDate).TotalSeconds);
+
+      this.Update();
+    }
   }
 }

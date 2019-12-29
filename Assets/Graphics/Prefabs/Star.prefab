@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9059fd4b6ae0e454789473757a8e01e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 5
+  RotationSpeed: 0.25
 --- !u!1 &7421023808199776075
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7421023808276102544}
   - component: {fileID: 7421023808276102547}
+  - component: {fileID: 3605734802784061742}
   m_Layer: 0
   m_Name: Star
   m_TagString: Untagged
@@ -251,6 +252,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Offset: {x: 35, y: 55, z: 0}
+--- !u!114 &3605734802784061742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7421023808276102545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efb962a9b34c384ca6e58afbd36b27c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GalaxyController: {fileID: 0}
 --- !u!1 &7421023808705396819
 GameObject:
   m_ObjectHideFlags: 0
