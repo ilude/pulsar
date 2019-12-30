@@ -13,7 +13,7 @@ namespace Sailfin
       Name = "Sol",
       Mass = 1.99e30f,
       Type = OrbitalType.Star,
-      OrbitalDistance = 0,
+      Distance = 0,
       InitialAngle = 0
     };
 

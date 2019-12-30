@@ -4,23 +4,34 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Label : MonoBehaviour
 {
-  public Vector3 Offset;
+  private Vector3 Offset;
+  public int offset = 5;
+
 
   private TMP_Text label;
   // Start is called before the first frame update
   private void Start()
   {
+    Init();
+  }
+
+  private void Init()
+  {
+    if ((label != null && label.text == this.name)) return;
     var canvas = this.GetComponentInChildren<Canvas>();
     canvas.name = string.Format("{0} Label", this.name);
 
     label = canvas.GetComponentInChildren<TMP_Text>();
     label.text = this.name;
+
+    var offset = this.transform.localScale.z;
   }
 
-  private void Update()
+  private void LateUpdate()
   {
-    
-    label.transform.position = Camera.main.WorldToScreenPoint(this.transform.position) + Offset;
+    Init();
+
+    label.transform.position = (Camera.main.WorldToScreenPoint(this.transform.position) + Offset);
   }
 
 }

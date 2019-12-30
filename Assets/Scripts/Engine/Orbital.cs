@@ -16,13 +16,14 @@ namespace Sailfin
 
     public Orbital Parent { get; protected set; }
     public List<Orbital> Children { get; protected set; }
+    
 
     public Orbital(OrbitalConfig config)
     {
       Name = config.Name;
       Mass = config.Mass;
-      InitAngle = config.InitialAngle;
-      OrbitalDistance = config.OrbitalDistance;
+      InitAngle = (config.InitialAngle == null) ? Random.Range(0,359) : (float)config.InitialAngle;
+      OrbitalDistance = config.Distance;
       Type = config.Type;
 
       OffsetAngle = 0;
@@ -52,7 +53,7 @@ namespace Sailfin
       this.Position = position;
     }
 
-    public void AddChild(Orbital c)
+    public Orbital AddChild(Orbital c)
     {
       c.Parent = this;
       Children.Add(c);
@@ -61,6 +62,8 @@ namespace Sailfin
       var s2 = Gravity.Constant * (this.Mass + c.Mass);
       var s3 = s1 / s2;
       c.TimeToOrbit = Mathf.Sqrt(s3);
+
+      return c;
     }
 
     public void RemoveChild(Orbital c)

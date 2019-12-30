@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-public class MouseHandler : MonoBehaviour
+public class CameraView : MonoBehaviour
 {
+  public int MinCameraDistance = 100;
+  public int MaxCameraDistance = 10000;
+  public float CurCameraDistance => this.GetComponent<Camera>().orthographicSize;
+
   void Update()
   {
 
@@ -9,14 +13,14 @@ public class MouseHandler : MonoBehaviour
     if (Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.orthographicSize > 1)
     {
       // Scroll camera inwards
-      Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize -= Camera.main.orthographicSize / 5, 20f, 100000f);
+      Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize -= Camera.main.orthographicSize / 5, MinCameraDistance, MaxCameraDistance);
     }
 
     // Get mouse scrollwheel backwards || optional code
     if (Input.GetAxis("Mouse ScrollWheel") < 0 /*Optional |: && Camera.main.orthographicSize < maxScroll :| */)
     {
       // Scrolling Backwards
-      Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize += Camera.main.orthographicSize / 5, 20f, 100000f);
+      Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize += Camera.main.orthographicSize / 5, MinCameraDistance, MaxCameraDistance);
     }
 
     var movement = new Vector3(0, 0, 0);

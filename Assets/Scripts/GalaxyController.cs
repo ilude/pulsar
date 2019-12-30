@@ -20,6 +20,8 @@ public class GalaxyController : MonoBehaviour
     return new Vector3(size, size, size);
   }
 
+  public CameraView Camera;
+
   [Range(1, 100)]
   public int Scaler = 50;
 
@@ -31,6 +33,12 @@ public class GalaxyController : MonoBehaviour
 
   [Range(1, 100)]
   public int DefaultBodySize = 20;
+
+  [Range(1, 100)]
+  public float LabelRate = 5;
+
+  [Range(0, 1)]
+  public float LabelScale = 1;
   
   public float GalacticScale => Mathf.Pow(Scaler, ScalerPower);
   
@@ -71,22 +79,18 @@ public class GalaxyController : MonoBehaviour
 
   public void Pause()
   {
-    Debug.Log("pause");
     RealTime = false;
   }
 
   [EnumAction(typeof(TimeBy))]
   public void Advance(int timeby)
   {
-    Debug.Log("advance");
     Galaxy.Advance((TimeBy)timeby);
-    
   }
 
   [EnumAction(typeof(TimeBy))]
   public void RunAt(int timeby)
   {
-    Debug.Log("runat");
     TimeStep = (TimeBy)timeby;
     RealTime = true;
   }

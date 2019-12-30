@@ -61,15 +61,13 @@ namespace Sailfin
       var startDate = Date;
       var pulseDate = pulse(Date);
 
-      var circuitBreaker = 0;
-      while (pulseDate.Day > 29 || circuitBreaker < 2)
-      {
+      this.GalacticTime += Convert.ToUInt64((pulseDate - startDate).TotalSeconds);
+
+      while (pulseDate.Day > 29)
         pulseDate = pulseDate.AddDays(1);
-        circuitBreaker++;
-      }
 
       this.Date = pulseDate;
-      this.GalacticTime += Convert.ToUInt64((this.Date - startDate).TotalSeconds);
+      
 
       this.Update();
     }
