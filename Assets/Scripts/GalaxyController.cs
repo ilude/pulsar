@@ -49,12 +49,13 @@ public class GalaxyController : MonoBehaviour
   private bool RealTime = false;
 
   // Start is called before the first frame update
-  void Start()
+  void Awake()
   {
     Galaxy = new Galaxy();
     Galaxy.Generate(new SolGenerator());
 
     CreateView(Galaxy.Systems.First(), this.transform);
+    this.gameObject.SetActive(true);
     Debug.Log("Galaxy Created!");
   }
 

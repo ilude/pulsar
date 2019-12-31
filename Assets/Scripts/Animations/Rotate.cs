@@ -11,6 +11,6 @@ public class Rotate : MonoBehaviour
   // Update is called once per frame
   void FixedUpdate()
   {
-    this.transform.Rotate(0, RotationSpeed, 0);
+    this.transform.Rotate(0, RotationSpeed, 0 );
   }
 }
