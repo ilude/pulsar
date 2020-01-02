@@ -17,12 +17,10 @@ namespace Sailfin
       InitialAngle = 0
     };
 
-    public Star() : base(DefaultConfig) {}
+    public Star() : this(DefaultConfig) {}
     public Star(OrbitalConfig config) : base(config) {}
 
-    protected override void UpdatePosition(ulong galacticTime)
-    {
-      // stars don't move
-    }
+    // stars don't move
+    protected override void UpdatePosition(ulong galacticTime) {}
   }
 }

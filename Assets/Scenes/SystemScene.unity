@@ -1174,7 +1174,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 15000
+  far clip plane: 2000
   field of view: 60
   orthographic: 1
   orthographic size: 200
@@ -1216,11 +1216,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a875a7cb65bb5045b9cc7421972c08e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c6e04349df863c409701983adfd29a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinCameraDistance: 100
-  MaxCameraDistance: 10000
+  ScrollRate: 1
+  MinCameraDistance: 5
+  MaxCameraDistance: 163840
+  transitionDuration: 0.8
+  PlanetScale: 5
 --- !u!1 &1026686784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,11 +2654,11 @@ MonoBehaviour:
   - {fileID: 1964149310321869961, guid: 272e2c87068a0c946b18a649db30e294, type: 3}
   - {fileID: 0}
   - {fileID: 0}
-  OrbitalViewBodySize: 64000000280000000f0000000500000019000000
+  OrbitalViewBodySize: 6d00000014000000050000000200000002000000
   Camera: {fileID: 963194229}
   Scaler: 27
   ScalerPower: 6
-  MinOrbitalDistance: 45
+  MinOrbitalDistance: 25
   DefaultBodySize: 20
   LabelRate: 5
   LabelScale: 1

@@ -20,7 +20,7 @@ public class GalaxyController : MonoBehaviour
     return new Vector3(size, size, size);
   }
 
-  public CameraView Camera;
+  public SystemCameraView Camera;
 
   [Range(1, 100)]
   public int Scaler = 50;
@@ -48,6 +48,10 @@ public class GalaxyController : MonoBehaviour
 
   private bool RealTime = false;
 
+  [Range(0.1f, 5)]
+  private float transitionDuration = 0.1f;
+  private ulong UpdateCompletedTime;
+
   // Start is called before the first frame update
   void Awake()
   {
@@ -55,8 +59,17 @@ public class GalaxyController : MonoBehaviour
     Galaxy.Generate(new SolGenerator());
 
     CreateView(Galaxy.Systems.First(), this.transform);
-    this.gameObject.SetActive(true);
     Debug.Log("Galaxy Created!");
+  }
+
+  void Update()
+  {
+    if (Galaxy == null || Galaxy.IsGenerated == false) return;
+
+    if(RealTime && Galaxy.GalacticTime >= UpdateCompletedTime)
+    {
+      Advance(TimeStep);
+    }
   }
 
   private void CreateView(Orbital body, Transform transform)
@@ -67,17 +80,7 @@ public class GalaxyController : MonoBehaviour
 
     foreach (var child in body.Children) CreateView(child, view.transform);
   }
-
-  // Update is called once per frame
-  void FixedUpdate()
-  {
-    if (Galaxy == null || !Galaxy.IsGenerated) return;
-
-    if (RealTime) Galaxy.Advance(TimeStep);
-
-    Galaxy.Update();
-  }
-
+  
   public void Pause()
   {
     RealTime = false;
@@ -86,7 +89,7 @@ public class GalaxyController : MonoBehaviour
   [EnumAction(typeof(TimeBy))]
   public void Advance(int timeby)
   {
-    Galaxy.Advance((TimeBy)timeby);
+    Advance((TimeBy)timeby);
   }
 
   [EnumAction(typeof(TimeBy))]
@@ -94,8 +97,30 @@ public class GalaxyController : MonoBehaviour
   {
     TimeStep = (TimeBy)timeby;
     RealTime = true;
+    Advance(TimeStep);
   }
 
-  
+  private void Advance(TimeBy timeBy)
+  {
+    ulong seconds = Galaxy.Advance(timeBy);
+    UpdateCompletedTime = Galaxy.GalacticTime + seconds;
+    StartCoroutine(Transition(seconds));
+  }
+
+  IEnumerator Transition(ulong seconds)
+  {
+    Debug.Log("Starting Galactic Update...");
+    float t = 0.0f;
+    while (t < 1.0f)
+    {
+      t += Time.deltaTime * (Time.timeScale / transitionDuration);
+      ulong update = (ulong)Mathf.RoundToInt(Mathf.Lerp(0, seconds, t));
+      Galaxy.Update(update);
+      seconds -= update;
+      yield return 0;
+    }
+    Galaxy.Update(seconds);
+    Debug.Log("Completed Galactic Update!");
+  }
 
 }

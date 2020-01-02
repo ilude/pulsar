@@ -11,7 +11,7 @@ namespace Sailfin
     public ulong GalacticTime { get; private set; }
     public DateTime Date { get; internal set; }
 
-    Dictionary<TimeBy, Action> InvokePulse = new Dictionary<TimeBy, Action>(Enum.GetValues(typeof(TimeBy)).Length);
+    Dictionary<TimeBy, Func<ulong>> InvokePulse = new Dictionary<TimeBy, Func<ulong>>(Enum.GetValues(typeof(TimeBy)).Length);
 
 
     public Galaxy()
@@ -34,42 +34,41 @@ namespace Sailfin
     {
       Generator = generator;
       Generator.CreateSystemsIn(this);
-      Update();
+      Update(0);
       IsGenerated = true;
+      
     }
 
     #endregion
 
     #region Update
 
-    public void Update()
+    public void Update(ulong seconds)
     {
-      if (IsGenerated == false) return;
+      GalacticTime += seconds;
+      Date.AddSeconds(seconds);
 
       foreach (var star in Systems) star.Update(GalacticTime);
     }
     
     #endregion
 
-    internal void Advance(TimeBy amount)
+    internal ulong Advance(TimeBy amount)
     {
-      InvokePulse[amount]();
+      if (IsGenerated == false) return 0; 
+
+      return InvokePulse[amount]();
     }
 
-    private void Pulse(Func<DateTime, DateTime> pulse)
+    private ulong Pulse(Func<DateTime, DateTime> pulse)
     {
       var startDate = Date;
       var pulseDate = pulse(Date);
 
-      this.GalacticTime += Convert.ToUInt64((pulseDate - startDate).TotalSeconds);
-
       while (pulseDate.Day > 29)
         pulseDate = pulseDate.AddDays(1);
 
-      this.Date = pulseDate;
-      
-
-      this.Update();
+      return Convert.ToUInt64((pulseDate - startDate).TotalSeconds);
     }
   }
 }

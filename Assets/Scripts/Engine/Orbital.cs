@@ -22,7 +22,7 @@ namespace Sailfin
     {
       Name = config.Name;
       Mass = config.Mass;
-      InitAngle = (config.InitialAngle == null) ? Random.Range(0,359) : (float)config.InitialAngle;
+      InitAngle = 0;// (config.InitialAngle == null) ? Random.Range(0,359) : (float)config.InitialAngle;
       OrbitalDistance = config.Distance;
       Type = config.Type;
 
@@ -62,7 +62,6 @@ namespace Sailfin
       var s2 = Gravity.Constant * (this.Mass + c.Mass);
       var s3 = s1 / s2;
       c.TimeToOrbit = Mathf.Sqrt(s3);
-
       return c;
     }
 
