@@ -46,7 +46,7 @@ namespace Sailfin
     public void Update(ulong seconds)
     {
       GalacticTime += seconds;
-      Date.AddSeconds(seconds);
+      Date = Date.AddSeconds(seconds);
 
       foreach (var star in Systems) star.Update(GalacticTime);
     }

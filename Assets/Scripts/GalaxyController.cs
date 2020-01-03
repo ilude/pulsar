@@ -13,7 +13,7 @@ public class GalaxyController : MonoBehaviour
   private OrbitalView GetPlanetPrefab(OrbitalType type) => OrbitalPreFabs[(int)type] ?? OrbitalPreFabs[(int)OrbitalType.Planet];
 
   [EnumNamedArray(typeof(OrbitalType))]
-  public int[] OrbitalViewBodySize = new int[Enum.GetValues(typeof(OrbitalType)).Length];
+  public float[] OrbitalViewBodySize = new float[Enum.GetValues(typeof(OrbitalType)).Length];
   public Vector3 GetBodySize(OrbitalType type)
   {
     var size = (OrbitalViewBodySize[(int)type] > 0) ? OrbitalViewBodySize[(int)type] : DefaultBodySize;
