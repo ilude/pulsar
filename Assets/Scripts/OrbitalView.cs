@@ -49,53 +49,57 @@ public class OrbitalView : MonoBehaviour
     label.transform.position = (GalaxyController.Camera.camera.WorldToScreenPoint(transform.position + new Vector3(0, (float)offset, 0)));
     label.transform.localScale = Vector3.one * CamScale;
 
-    if (CamScale <= 0.55f && Orbital.Type == OrbitalType.Planet && Orbital.OrbitalDistance < 1000 && label.enabled)
+    if (CamScale <= 0.55f && Orbital.Type == OrbitalType.Planet && Orbital.OrbitalDistance < 1000 && label.alpha == 1)
     {
       // hide label
-      label.CrossFadeAlpha(0.0f, 1f, false);
-      label.enabled = false;
+      FadeOut(label, 0.5f);
     }
-    else if (CamScale > 0.55f && Orbital.Type == OrbitalType.Planet && Orbital.OrbitalDistance < 1000 && label.enabled == false)
+    else if (CamScale > 0.55f && Orbital.Type == OrbitalType.Planet && Orbital.OrbitalDistance < 1000 && label.alpha == 0)
     {
-      label.CrossFadeAlpha(1.0f, 1f, false);
-      label.enabled = true;
+      FadeIn(label, 0.5f);
     }
     
-    if(CamScale < 0.75f && Orbital.Type < OrbitalType.Planet && label.enabled)
+    if(CamScale < 0.75f && Orbital.Type < OrbitalType.Planet && label.alpha == 1)
     {
       // hide label
-      label.CrossFadeAlpha(0.0f, 1f, false);
-      label.enabled = false;
+      FadeOut(label, 0.5f);
     }
-    else if(CamScale >= 0.75f && Orbital.Type < OrbitalType.Planet && label.enabled == false)
+    else if(CamScale >= 0.75f && Orbital.Type < OrbitalType.Planet && label.alpha == 0)
     {
-
-      label.CrossFadeAlpha(1.0f, 1f, false);
-      label.enabled = true;
+      FadeIn(label, 0.5f);
     }
 
     Debug.LogFormat("CamScale: {0}", CamScale);
   }
 
-  public IEnumerator FadeTextToFullAlpha(float t, TMP_Text label)
+  private void FadeOut(TMP_Text label, float duration = 0.5f)
   {
-    label.enabled = true;
-    label.color = new Color(label.color.r, label.color.g, label.color.b, 0);
-    while (label.color.a < 1.0f)
-    {
-      label.color = new Color(label.color.r, label.color.g, label.color.b, label.color.a + (Time.deltaTime / t));
-      yield return null;
-    }
+    StartCoroutine(Fade(label, FadeDirection.Out, duration));
+  }
+  private void FadeIn(TMP_Text label, float duration = 0.5f)
+  {
+    StartCoroutine(Fade(label, FadeDirection.In, duration));
   }
 
-  public IEnumerator FadeTextToZeroAlpha(float t, TMP_Text label)
+  private IEnumerator Fade(TMP_Text label, FadeDirection direction, float duration = 0.5f)
   {
-    label.color = new Color(label.color.r, label.color.g, label.color.b, 1);
-    while (label.color.a > 0.0f)
+    float start = (direction == FadeDirection.In) ? 0f : 1f;
+    float end = (direction == FadeDirection.Out) ? 0f : 1f;
+    float currentTime = 0f;
+    while (currentTime < duration)
     {
-      label.color = new Color(label.color.r, label.color.g, label.color.b, label.color.a - (Time.deltaTime / t));
+      float alpha = Mathf.Lerp(start, end, currentTime / duration);
+      label.color = new Color(label.color.r, label.color.g, label.color.b, alpha);
+      currentTime += Time.deltaTime;
       yield return null;
     }
-    label.enabled = false;
+    label.alpha = (direction == FadeDirection.In) ? 1f : 0f;
+    yield break;
+  }
+
+  private enum FadeDirection
+  {
+    In,
+    Out
   }
 }
