@@ -47,6 +47,8 @@ namespace Sailfin
     {
       GalacticTime += seconds;
       Date = Date.AddSeconds(seconds);
+      while (Date.Day > 29)
+        Date = Date.AddDays(1);
 
       foreach (var star in Systems) star.Update(GalacticTime);
     }
@@ -64,9 +66,6 @@ namespace Sailfin
     {
       var startDate = Date;
       var pulseDate = pulse(Date);
-
-      while (pulseDate.Day > 29)
-        pulseDate = pulseDate.AddDays(1);
 
       return Convert.ToUInt64((pulseDate - startDate).TotalSeconds);
     }

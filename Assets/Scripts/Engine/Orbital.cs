@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Sailfin
 {
@@ -17,13 +18,15 @@ namespace Sailfin
 
     public Orbital Parent { get; protected set; }
     public List<Orbital> Children { get; protected set; }
+    public OrbitalConfig Config;
     
 
     public Orbital(OrbitalConfig config)
     {
+      Config = config;
       Name = config.Name;
       Mass = config.Mass;
-      InitAngle = 0;// (config.InitialAngle == null) ? Random.Range(0,359) : (float)config.InitialAngle;
+      InitAngle = (config.Angle == OrbitalAngle.Random) ? Random.Range(0f, 259.99f) : (float)config.Angle;
       OrbitalDistance = config.Distance;
       Type = config.Type;
 

@@ -59,17 +59,17 @@ public class OrbitalView : MonoBehaviour
       FadeIn(label, 0.5f);
     }
     
-    if(CamScale < 0.75f && Orbital.Type < OrbitalType.Planet && label.alpha == 1)
+    if(CamScale < 0.75f && Orbital.Type == OrbitalType.Moon && label.alpha == 1)
     {
       // hide label
       FadeOut(label, 0.5f);
     }
-    else if(CamScale >= 0.75f && Orbital.Type < OrbitalType.Planet && label.alpha == 0)
+    else if(CamScale >= 0.75f && Orbital.Type == OrbitalType.Moon && label.alpha == 0)
     {
       FadeIn(label, 0.5f);
     }
 
-    Debug.LogFormat("CamScale: {0}", CamScale);
+    //Debug.LogFormat("CamScale: {0}", CamScale);
   }
 
   private void FadeOut(TMP_Text label, float duration = 0.5f)

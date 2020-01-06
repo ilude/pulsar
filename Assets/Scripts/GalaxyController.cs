@@ -109,7 +109,7 @@ public class GalaxyController : MonoBehaviour
 
   IEnumerator Transition(ulong seconds)
   {
-    Debug.Log("Starting Galactic Update...");
+    //Debug.Log("Starting Galactic Update...");
     float t = 0.0f;
     while (t < 1.0f)
     {
@@ -120,7 +120,7 @@ public class GalaxyController : MonoBehaviour
       yield return 0;
     }
     Galaxy.Update(seconds);
-    Debug.Log("Completed Galactic Update!");
+    //Debug.Log("Completed Galactic Update!");
   }
 
 }

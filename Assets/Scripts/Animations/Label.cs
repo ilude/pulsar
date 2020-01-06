@@ -4,9 +4,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Label : MonoBehaviour
 {
-  private Vector3 Offset;
   public int offset = 5;
-
 
   private TMP_Text label;
   // Start is called before the first frame update
@@ -31,7 +29,7 @@ public class Label : MonoBehaviour
   {
     Init();
 
-    label.transform.position = (Camera.main.WorldToScreenPoint(this.transform.position) + Offset);
+    label.transform.position = (Camera.main.WorldToScreenPoint(this.transform.position) + new Vector3(0,offset,0));
   }
 
 }

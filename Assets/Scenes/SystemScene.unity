@@ -1225,6 +1225,7 @@ MonoBehaviour:
   CameraSteps: 20
   MinCameraSize: 5
   MaxCameraSize: 0
+  stepIndex: 0
 --- !u!1 &1026686784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,13 +2652,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OrbitalPreFabs:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1964149310321869961, guid: d7f13903d83b81047b19a550020fad3e, type: 3}
   - {fileID: 1964149310321869961, guid: 272e2c87068a0c946b18a649db30e294, type: 3}
   - {fileID: 1964149310321869961, guid: d7f13903d83b81047b19a550020fad3e, type: 3}
   - {fileID: 3605734802784061742, guid: 74e73e0bd4c16134bb04302d133bc811, type: 3}
   OrbitalViewBodySize:
   - 0.25
-  - 0.5
+  - 1
   - 1
   - 10
   - 109

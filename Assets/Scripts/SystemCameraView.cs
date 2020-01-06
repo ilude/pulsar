@@ -30,8 +30,7 @@ public class SystemCameraView : MonoBehaviour
       else return 1;
     }
   }
-
-
+  
   private void Awake()
   {
     Steps = new int[CameraSteps];
